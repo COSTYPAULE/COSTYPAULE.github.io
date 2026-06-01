@@ -10,7 +10,8 @@ const {
   experiences,
   certifications,
   softSkills,
-  languages
+  languages,
+  featuredGitHubRepos
 } = PORTFOLIO_DATA;
 
 function initProfile() {
@@ -225,60 +226,74 @@ function initTypedText() {
   tick();
 }
 
-async function fetchAllGitHubRepos(username) {
-  const repos = [];
-  let page = 1;
-  while (true) {
-    const res = await fetch(
-      `https://api.github.com/users/${username}/repos?per_page=100&page=${page}&sort=updated&type=all`
-    );
-    if (!res.ok) throw new Error("API error");
-    const batch = await res.json();
-    if (!Array.isArray(batch) || !batch.length) break;
-    repos.push(...batch);
-    if (batch.length < 100) break;
-    page += 1;
+async function fetchRepoBySlug(username, slug) {
+  const res = await fetch(`https://api.github.com/repos/${username}/${slug}`);
+  if (res.ok) return res.json();
+  return null;
+}
+
+async function resolveFeaturedRepo(username, config) {
+  const names = [config.slug, ...(config.aliases || [])];
+  for (const name of names) {
+    const repo = await fetchRepoBySlug(username, name);
+    if (repo) return repo;
   }
-  return repos;
+  return {
+    name: config.displayName || config.slug,
+    html_url: `https://github.com/${username}/${config.slug}`,
+    description: config.fallbackDescription,
+    language: config.fallbackTech?.[0] || null,
+    stargazers_count: 0,
+    forks_count: 0,
+    fork: false,
+    _fallback: true,
+    _tech: config.fallbackTech || []
+  };
+}
+
+function renderGitHubCard(r) {
+  const techTags = r._tech?.length
+    ? r._tech.map((t) => `<span>${t}</span>`).join("")
+    : r.language
+      ? `<span>${r.language}</span>`
+      : "";
+  return `
+    <a href="${r.html_url}" target="_blank" rel="noopener" class="project-item github-card">
+      <div class="project-tag">
+        <i class="fa-brands fa-github"></i>
+        ${r.fork ? "Fork" : r._fallback ? "Projet GitHub" : "Repository"}
+      </div>
+      <h4>${r.name}</h4>
+      <p>${r.description || "Projet hébergé sur GitHub."}</p>
+      <div class="repo-meta">
+        ${r.language && !r._tech?.length ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ""}
+        ${!r._fallback ? `<span><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
+        <span><i class="fa-solid fa-code-branch"></i> ${r.forks_count}</span>` : ""}
+      </div>
+      ${techTags ? `<div class="project-tech">${techTags}</div>` : ""}
+    </a>`;
 }
 
 async function loadGitHubRepos() {
   const grid = document.getElementById("github-grid");
   const countEl = document.getElementById("github-count");
-  try {
-    const repos = await fetchAllGitHubRepos(profile.github);
-    const filtered = repos
-      .filter((r) => !r.name.toLowerCase().includes("github.io"))
-      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+  const featured = featuredGitHubRepos || [];
 
-    if (!filtered.length) {
-      grid.innerHTML = `<p class="loading">Aucun dépôt public pour le moment.</p>`;
-      if (countEl) countEl.textContent = "";
+  try {
+    if (!featured.length) {
+      grid.innerHTML = `<p class="loading">Aucun projet GitHub configuré.</p>`;
       return;
     }
 
+    const repos = await Promise.all(
+      featured.map((config) => resolveFeaturedRepo(profile.github, config))
+    );
+
     if (countEl) {
-      countEl.textContent = `${filtered.length} dépôt${filtered.length > 1 ? "s" : ""} public${filtered.length > 1 ? "s" : ""} sur @${profile.github}`;
+      countEl.textContent = `Projets mis en avant sur @${profile.github}`;
     }
 
-    grid.innerHTML = filtered
-      .map(
-        (r) => `
-      <a href="${r.html_url}" target="_blank" rel="noopener" class="project-item github-card">
-        <div class="project-tag">
-          <i class="fa-brands fa-github"></i>
-          ${r.fork ? "Fork" : "Repository"}
-        </div>
-        <h4>${r.name}</h4>
-        <p>${r.description || "Projet hébergé sur GitHub."}</p>
-        <div class="repo-meta">
-          ${r.language ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ""}
-          <span><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
-          <span><i class="fa-solid fa-code-branch"></i> ${r.forks_count}</span>
-        </div>
-      </a>`
-      )
-      .join("");
+    grid.innerHTML = repos.map(renderGitHubCard).join("");
     observeElements(grid.querySelectorAll(".github-card"));
   } catch {
     grid.innerHTML = `<p class="loading">Impossible de charger les dépôts GitHub.</p>`;

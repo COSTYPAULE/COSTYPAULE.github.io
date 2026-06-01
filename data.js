@@ -205,5 +205,31 @@ const PORTFOLIO_DATA = {
     "Python", "R", "JavaScript", "PHP", "Dart", "Flutter",
     "HTML/CSS", "C / C#", "MySQL", "NoSQL", "Firestore",
     "Odoo", "Power BI", "SAP", "Git", "Excel"
+  ],
+  featuredGitHubRepos: [
+    {
+      slug: "speeddelivery",
+      aliases: ["SpeedDelivery"],
+      displayName: "Speed Delivery",
+      fallbackDescription:
+        "Application mobile de livraison de repas : interface utilisateur, logique métier, gestion des commandes et notifications en temps réel via Firestore.",
+      fallbackTech: ["Flutter", "Firebase", "Firestore", "REST"]
+    },
+    {
+      slug: "ecoscan",
+      aliases: ["EcoScan"],
+      displayName: "EcoScan",
+      fallbackDescription:
+        "Collecte, nettoyage et visualisation de données ; conception de modèles de machine learning dans le cadre du Master IABD.",
+      fallbackTech: ["Python", "R", "SQL", "ML"]
+    },
+    {
+      slug: "portfolio_costy_paule",
+      aliases: ["Portfolio_Paule_COSTY", "Portfolio_Paule_COSTY"],
+      displayName: "Portfolio Costy Paule",
+      fallbackDescription:
+        "Portfolio personnel et vitrine de projets professionnels sur GitHub Pages.",
+      fallbackTech: ["HTML/CSS", "JavaScript", "GitHub Pages"]
+    }
   ]
 };
