@@ -1,24 +1,17 @@
-# Portfolio — Costy Paule Michelle
+# Portfolio — Paule Michelle COSTY BANKOUE
 
-Portfolio personnel dynamique hébergé sur GitHub Pages.
+Portfolio professionnel hébergé sur GitHub Pages.
 
-**URL :** https://costypaule.github.io
+**Site :** [https://costypaule.github.io](https://costypaule.github.io)
 
-## Fonctionnalités
+## Contenu
 
-- Animations au scroll et compteurs animés
-- Texte dynamique (rôles)
-- Barres de compétences animées
-- Chargement des dépôts GitHub via API
-- Menu mobile responsive
-- Formulaire de contact (mailto)
+- Profil, expériences et formations (données issues du CV)
+- Compétences techniques et certifications
+- Projets professionnels et dépôts GitHub
 
 ## Développement local
-
-Ouvrir `index.html` dans un navigateur ou :
 
 ```bash
 python3 -m http.server 8080
 ```
-
-Puis visiter http://localhost:8080
