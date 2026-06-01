@@ -11,7 +11,7 @@
   --accent: #7c3aed;
   --accent-2: #6366f1;
   --accent-glow: rgba(124, 58, 237, 0.4);
-  --sidebar-w: 280px;
+  --sidebar-w: 320px;
   --radius: 16px;
   --radius-sm: 10px;
   --font: "Outfit", system-ui, sans-serif;
@@ -65,7 +65,8 @@ body {
   top: 0;
   left: 0;
   width: var(--sidebar-w);
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   background: var(--bg-muted);
   border-right: 1px solid var(--border);
   z-index: 100;
@@ -78,8 +79,10 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 28px 20px;
+  min-height: 100vh;
+  padding: 36px 24px;
   overflow-y: auto;
+  justify-content: space-between;
 }
 
 .sidebar-brand {
@@ -93,12 +96,12 @@ body {
 }
 
 .avatar-ring {
-  width: 168px;
-  height: 168px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   padding: 4px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   box-shadow: 0 8px 32px var(--accent-glow);
   animation: float 5s ease-in-out infinite;
 }
@@ -119,44 +122,45 @@ body {
 .brand-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.15rem;
   letter-spacing: 0.02em;
   display: block;
 }
 
 .brand-role {
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
-  margin-top: 4px;
-  line-height: 1.4;
+  margin-top: 6px;
+  line-height: 1.5;
   display: block;
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   flex: 1;
+  padding: 16px 0;
 }
 
 .sidebar-nav a {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
+  gap: 14px;
+  padding: 14px 16px;
   border-radius: var(--radius-sm);
   text-decoration: none;
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: var(--transition);
   border: 1px solid transparent;
 }
 
 .sidebar-nav a i {
-  width: 18px;
+  width: 20px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-dim);
   transition: color var(--transition);
 }
@@ -190,21 +194,22 @@ body {
 .sidebar-social {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  padding-top: 20px;
+  gap: 12px;
+  padding-top: 24px;
   border-top: 1px solid var(--border);
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .sidebar-social a {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   color: var(--text-muted);
+  font-size: 1.1rem;
   transition: var(--transition);
 }
 
