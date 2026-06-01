@@ -1,17 +1,18 @@
 :root {
-  --bg: #0b0d12;
-  --bg-alt: #0f1219;
-  --card-bg: #151922;
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --accent: #38bdf8;
+  --bg: #080a0f;
+  --bg-alt: #0d1018;
+  --card-bg: rgba(21, 25, 34, 0.72);
+  --primary: #7c6cf0;
+  --primary-dark: #6558d9;
+  --accent: #22d3ee;
   --text-main: #f1f5f9;
   --text-dim: #94a3b8;
   --text-muted: #64748b;
-  --border: rgba(148, 163, 184, 0.12);
+  --border: rgba(148, 163, 184, 0.14);
   --nav-h: 72px;
-  --radius: 16px;
-  --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  --radius: 14px;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --avatar-size: 132px;
 }
 
 * {
@@ -157,8 +158,8 @@ nav.scrolled {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
-  gap: 48px 64px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 40px 56px;
   align-items: center;
   justify-items: start;
   max-width: 1160px;
@@ -175,17 +176,32 @@ nav.scrolled {
 
 .profile-wrapper {
   position: relative;
-  width: 100%;
+  flex-shrink: 0;
+}
+
+.profile-ring {
+  width: calc(var(--avatar-size) + 10px);
+  height: calc(var(--avatar-size) + 10px);
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  box-shadow:
+    0 0 0 4px rgba(124, 108, 240, 0.12),
+    0 12px 32px rgba(124, 108, 240, 0.25);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(124, 108, 240, 0.12), 0 12px 32px rgba(124, 108, 240, 0.2); }
+  50% { box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.15), 0 16px 36px rgba(34, 211, 238, 0.22); }
 }
 
 .profile-container {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
   overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  border: 3px solid var(--bg);
   background: var(--card-bg);
 }
 
@@ -194,6 +210,11 @@ nav.scrolled {
   height: 100%;
   object-fit: cover;
   object-position: top center;
+  transition: transform 0.4s ease;
+}
+
+.profile-ring:hover .profile-pic {
+  transform: scale(1.06);
 }
 
 .hero-badge {
@@ -467,9 +488,15 @@ h1 .highlight {
 
 .formation-card {
   background: var(--card-bg);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
+  transition: border-color 0.3s ease;
+}
+
+.formation-card:hover {
+  border-color: rgba(124, 108, 240, 0.3);
 }
 
 .formation-card h3 {
@@ -820,11 +847,13 @@ h1 .highlight {
 /* Contact */
 .contact-box {
   background: var(--card-bg);
+  backdrop-filter: blur(14px);
   padding: 44px;
   border-radius: calc(var(--radius) + 4px);
   border: 1px solid var(--border);
   max-width: 720px;
   margin: 0 auto;
+  box-shadow: var(--shadow);
 }
 
 .contact-box .section-label {

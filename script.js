@@ -225,34 +225,56 @@ function initTypedText() {
   tick();
 }
 
-async function loadGitHubRepos() {
-  const grid = document.getElementById("github-grid");
-  try {
+async function fetchAllGitHubRepos(username) {
+  const repos = [];
+  let page = 1;
+  while (true) {
     const res = await fetch(
-      `https://api.github.com/users/${profile.github}/repos?sort=updated&per_page=6`
+      `https://api.github.com/users/${username}/repos?per_page=100&page=${page}&sort=updated&type=all`
     );
     if (!res.ok) throw new Error("API error");
-    const repos = await res.json();
-    const filtered = repos.filter(
-      (r) =>
-        !r.fork &&
-        r.name !== profile.github &&
-        !r.name.toLowerCase().includes("github.io")
-    );
+    const batch = await res.json();
+    if (!Array.isArray(batch) || !batch.length) break;
+    repos.push(...batch);
+    if (batch.length < 100) break;
+    page += 1;
+  }
+  return repos;
+}
+
+async function loadGitHubRepos() {
+  const grid = document.getElementById("github-grid");
+  const countEl = document.getElementById("github-count");
+  try {
+    const repos = await fetchAllGitHubRepos(profile.github);
+    const filtered = repos
+      .filter((r) => !r.name.toLowerCase().includes("github.io"))
+      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+
     if (!filtered.length) {
       grid.innerHTML = `<p class="loading">Aucun dépôt public pour le moment.</p>`;
+      if (countEl) countEl.textContent = "";
       return;
     }
+
+    if (countEl) {
+      countEl.textContent = `${filtered.length} dépôt${filtered.length > 1 ? "s" : ""} public${filtered.length > 1 ? "s" : ""} sur @${profile.github}`;
+    }
+
     grid.innerHTML = filtered
       .map(
         (r) => `
       <a href="${r.html_url}" target="_blank" rel="noopener" class="project-item github-card">
-        <div class="project-tag"><i class="fa-brands fa-github"></i> Repository</div>
+        <div class="project-tag">
+          <i class="fa-brands fa-github"></i>
+          ${r.fork ? "Fork" : "Repository"}
+        </div>
         <h4>${r.name}</h4>
-        <p>${r.description || "Projet open source sur GitHub."}</p>
+        <p>${r.description || "Projet hébergé sur GitHub."}</p>
         <div class="repo-meta">
           ${r.language ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ""}
           <span><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
+          <span><i class="fa-solid fa-code-branch"></i> ${r.forks_count}</span>
         </div>
       </a>`
       )
@@ -260,7 +282,22 @@ async function loadGitHubRepos() {
     observeElements(grid.querySelectorAll(".github-card"));
   } catch {
     grid.innerHTML = `<p class="loading">Impossible de charger les dépôts GitHub.</p>`;
+    if (countEl) countEl.textContent = "";
   }
+}
+
+function initScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+  window.addEventListener(
+    "scroll",
+    () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      bar.style.width = `${p}%`;
+    },
+    { passive: true }
+  );
 }
 
 function initContactForm() {
@@ -371,6 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTypedText();
   initContactForm();
   initNav();
+  initScrollProgress();
   initReveal();
   loadGitHubRepos();
 });

@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <div class="bg-mesh" aria-hidden="true"></div>
+
   <nav id="navbar">
     <a href="#accueil" class="logo">Paule<span>COSTY.</span></a>
     <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
@@ -114,7 +117,8 @@
   <section id="github-repos" class="section section-alt">
     <p class="section-label reveal">Open source</p>
     <h2 class="title reveal">Dépôts GitHub</h2>
-    <div class="projects-grid" id="github-grid">
+    <p class="section-sub reveal" id="github-count"></p>
+    <div class="projects-grid github-grid" id="github-grid">
       <div class="loading">Chargement des dépôts…</div>
     </div>
   </section>
