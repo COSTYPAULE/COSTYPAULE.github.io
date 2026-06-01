@@ -5,7 +5,7 @@ const PORTFOLIO_DATA = {
     title: "Développeuse Full Stack orientée IA & Analyste de données",
     tagline:
       "Étudiante en Intelligence Artificielle & Big Data, motivée et orientée solutions.",
-    photo: "assets/profile_photo.jpg",
+    photo: "assets/profile.jpg",
     cv: "assets/CV_Michelle_COSTY.pdf",
     github: "COSTYPAULE",
     linkedin: "https://www.linkedin.com/in/costy-paule-975312356",
