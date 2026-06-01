@@ -376,7 +376,7 @@ function initNav() {
 
   document.addEventListener("click", (e) => {
     if (
-      window.innerWidth <= 900 &&
+      window.innerWidth <= 1024 &&
       sidebar.classList.contains("open") &&
       !sidebar.contains(e.target) &&
       !toggle.contains(e.target)
