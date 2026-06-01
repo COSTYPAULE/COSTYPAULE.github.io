@@ -997,31 +997,7 @@ h1 .highlight {
   transform: translateY(0);
 }
 
-/* ——— Responsive ——— */
-@media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-card { order: -1; }
-  .split { grid-template-columns: 1fr; }
-}
+/* ——— Responsive désactivé : affichage identique sur tous les écrans ——— */
+/* Les media queries ont été supprimées pour garantir un rendu identique
+   entre ordinateur et téléphone. */
 
-@media (max-width: 900px) {
-  .menu-toggle { display: flex; align-items: center; justify-content: center; }
-
-  .sidebar {
-    transform: translateX(-100%);
-    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.5);
-  }
-
-  .sidebar.open { transform: translateX(0); }
-
-  .main { margin-left: 0; }
-
-  .panel { padding: 48px 24px; }
-
-  .footer { padding: 24px; flex-direction: column; text-align: center; }
-}
-
-@media (max-width: 600px) {
-  .stats-mini { grid-template-columns: 1fr; }
-  .contact-form .form-row { grid-template-columns: 1fr; }
-}
