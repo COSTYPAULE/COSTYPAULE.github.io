@@ -15,16 +15,22 @@ const {
 } = PORTFOLIO_DATA;
 
 function initProfile() {
-  document.getElementById("profile-photo").src = profile.photo;
-  document.getElementById("profile-photo").alt = profile.name;
+  const photo = document.getElementById("profile-photo");
+  photo.src = profile.photo;
+  photo.alt = `${profile.name} ${profile.highlight}`;
+
   document.getElementById("hero-name").innerHTML =
     `${profile.name}<span class="highlight">${profile.highlight}</span>`;
   document.getElementById("hero-title").textContent = profile.title;
-  const taglineEl = document.getElementById("hero-tagline");
-  if (taglineEl) taglineEl.textContent = profile.tagline;
+  document.getElementById("hero-tagline").textContent = profile.tagline;
   document.getElementById("cv-link").href = profile.cv;
   document.getElementById("about-text").textContent = about;
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  const sidebarName = document.getElementById("sidebar-name");
+  const sidebarRole = document.getElementById("sidebar-role");
+  if (sidebarName) sidebarName.textContent = "Paule COSTY";
+  if (sidebarRole) sidebarRole.textContent = "Full Stack • IA & Data";
 
   const info = [
     { icon: "fa-envelope", text: profile.email },
@@ -50,7 +56,8 @@ function initProfile() {
     )
     .join("");
   document.getElementById("hero-social").innerHTML = socialHtml;
-  document.getElementById("footer-social").innerHTML = socialHtml;
+  const footerSocial = document.getElementById("footer-social");
+  if (footerSocial) footerSocial.innerHTML = socialHtml;
 }
 
 function initSoftSkills() {
@@ -254,9 +261,7 @@ async function resolveFeaturedRepo(username, config) {
 function renderGitHubCard(r) {
   const techTags = r._tech?.length
     ? r._tech.map((t) => `<span>${t}</span>`).join("")
-    : r.language
-      ? `<span>${r.language}</span>`
-      : "";
+    : "";
   return `
     <a href="${r.html_url}" target="_blank" rel="noopener" class="project-item github-card">
       <div class="project-tag">
@@ -265,11 +270,12 @@ function renderGitHubCard(r) {
       </div>
       <h4>${r.name}</h4>
       <p>${r.description || "Projet hébergé sur GitHub."}</p>
+      ${!r._fallback ? `
       <div class="repo-meta">
-        ${r.language && !r._tech?.length ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ""}
-        ${!r._fallback ? `<span><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
-        <span><i class="fa-solid fa-code-branch"></i> ${r.forks_count}</span>` : ""}
-      </div>
+        ${r.language ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ""}
+        <span><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
+        <span><i class="fa-solid fa-code-branch"></i> ${r.forks_count}</span>
+      </div>` : ""}
       ${techTags ? `<div class="project-tech">${techTags}</div>` : ""}
     </a>`;
 }
@@ -308,8 +314,7 @@ function initScrollProgress() {
     "scroll",
     () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
-      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
-      bar.style.width = `${p}%`;
+      bar.style.width = `${h > 0 ? (window.scrollY / h) * 100 : 0}%`;
     },
     { passive: true }
   );
@@ -334,41 +339,51 @@ function initContactForm() {
 }
 
 function initNav() {
-  const navbar = document.getElementById("navbar");
+  const sidebar = document.getElementById("sidebar");
   const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
   const links = document.querySelectorAll(".nav-link");
-  const sections = [...links].map((l) => document.querySelector(l.getAttribute("href")));
+  const sections = [...links]
+    .map((l) => document.querySelector(l.getAttribute("href")))
+    .filter(Boolean);
 
   window.addEventListener("scroll", () => {
-    navbar.classList.toggle("scrolled", window.scrollY > 40);
-    document.getElementById("back-top").classList.toggle("visible", window.scrollY > 500);
+    document.getElementById("back-top")?.classList.toggle("visible", window.scrollY > 500);
 
-    const scrollPos = window.scrollY + 140;
+    const scrollPos = window.scrollY + 160;
     sections.forEach((sec, i) => {
-      if (sec && scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+      if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
         links.forEach((l) => l.classList.remove("active"));
-        links[i].classList.add("active");
+        links[i]?.classList.add("active");
       }
     });
-  });
+  }, { passive: true });
 
-  toggle.addEventListener("click", () => {
-    const open = navLinks.classList.toggle("open");
-    toggle.classList.toggle("open", open);
+  toggle?.addEventListener("click", () => {
+    const open = sidebar.classList.toggle("open");
     toggle.setAttribute("aria-expanded", open);
   });
 
   links.forEach((link) => {
     link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      toggle.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
+      sidebar.classList.remove("open");
+      toggle?.setAttribute("aria-expanded", "false");
     });
   });
 
-  document.getElementById("back-top").addEventListener("click", () => {
+  document.getElementById("back-top")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      window.innerWidth <= 900 &&
+      sidebar.classList.contains("open") &&
+      !sidebar.contains(e.target) &&
+      !toggle.contains(e.target)
+    ) {
+      sidebar.classList.remove("open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
   });
 }
 
@@ -379,8 +394,8 @@ function observeElements(nodes) {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("visible");
         if (entry.target.classList.contains("skill-bar-item")) {
-          const fill = entry.target.querySelector(".skill-fill");
-          fill.style.width = `${entry.target.dataset.level}%`;
+          entry.target.querySelector(".skill-fill").style.width =
+            `${entry.target.dataset.level}%`;
         }
         observer.unobserve(entry.target);
       });
@@ -396,13 +411,18 @@ function initReveal() {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("visible");
-        if (entry.target.closest("#stats")) animateCounters();
+        if (entry.target.querySelector("[data-target]")) animateCounters();
         revealObserver.unobserve(entry.target);
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.08 }
   );
+
   document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+  const heroStats = document.querySelector(".hero-card");
+  if (heroStats) revealObserver.observe(heroStats);
+
   observeElements(
     document.querySelectorAll(
       ".card, .project-item, .skill-bar-item, .timeline-item, .cert-card"
