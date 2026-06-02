@@ -19,8 +19,12 @@ function initProfile() {
   photo.src = profile.photo;
   photo.alt = `${profile.name} ${profile.highlight}`;
 
+  const nameParts = profile.name.trim().split(/\s+/);
+  const highlightParts = profile.highlight.trim().split(/\s+/);
+  const whiteName = [nameParts[0], highlightParts[0]].filter(Boolean).join(" ");
+  const violetName = [...nameParts.slice(1), ...highlightParts.slice(1)].join(" ");
   document.getElementById("hero-name").innerHTML =
-    `${profile.name}<span class="highlight">${profile.highlight}</span>`;
+    `<span class="hero-name-white">${whiteName}</span> <span class="hero-name-violet">${violetName}</span>`;
   document.getElementById("hero-title").textContent = profile.title;
   document.getElementById("hero-tagline").textContent = profile.tagline;
   document.getElementById("cv-link").href = profile.cv;
