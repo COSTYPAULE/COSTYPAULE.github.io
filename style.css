@@ -441,25 +441,25 @@ h1 {
   font-size: inherit;
 }
 
-#hero-name .hero-first-name {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text);
-  white-space: nowrap;
-}
-
+#hero-name .hero-first-name,
 #hero-name .hero-family-name {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.4vw, 2.65rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
   line-height: 1.15;
-  color: var(--accent);
   white-space: nowrap;
   letter-spacing: 0.02em;
+}
+
+#hero-name .hero-first-name {
+  font-weight: 400;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+#hero-name .hero-family-name {
+  font-weight: 700;
+  color: var(--accent);
 }
 
 #hero-name .name-accent,
@@ -467,17 +467,23 @@ h1 {
   color: var(--accent);
 }
 
-.brand-name .brand-line-given {
+.brand-name .brand-line-given,
+.brand-name .brand-line-family {
   display: block;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.brand-name .brand-line-given {
+  font-weight: 400;
   color: var(--text);
+  text-transform: uppercase;
 }
 
 .brand-name .brand-line-family {
-  display: block;
   margin-top: 4px;
-  font-size: 0.95rem;
   font-weight: 700;
-  line-height: 1.2;
   color: var(--accent);
 }
 

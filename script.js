@@ -98,10 +98,10 @@ function initProfile() {
   const { profile: p } = portfolio;
   const photo = document.getElementById("profile-photo");
   photo.src = baseProfile.photo;
-  photo.alt = "BANKOUE Michelle COSTY PAULE";
+  photo.alt = "Paule Michelle COSTY BANKOUE";
 
-  const nameTop = "BANKOUE MICHELLE";
-  const nameBottom = "COSTY PAULE";
+  const nameTop = "PAULE MICHELLE";
+  const nameBottom = "COSTY BANKOUE";
   document.getElementById("hero-name").innerHTML =
     `<span class="hero-first-name">${nameTop}</span>` +
     `<span class="hero-family-name">${nameBottom}</span>`;
