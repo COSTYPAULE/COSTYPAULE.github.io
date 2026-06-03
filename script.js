@@ -108,7 +108,7 @@ function initProfile() {
   photo.src = baseProfile.photo;
   photo.alt = `${p.name} ${p.highlight}`;
 
-  const givenName = p.name || "Paule Michelle";
+  const givenName = (p.name || "Paule Michelle").toLowerCase();
   document.getElementById("hero-name").innerHTML =
     `<span class="hero-first-name">${givenName}</span>` +
     `<span class="hero-family-name">${formatFamilyNameHtml(p.highlight)}</span>`;
