@@ -103,7 +103,8 @@ function initProfile() {
   const topLine = /COSTY|BANKOUE/i.test(p.name) ? p.highlight : p.name;
   const bottomLine = (/COSTY|BANKOUE/i.test(p.name) ? p.name : p.highlight).toUpperCase();
   document.getElementById("hero-name").innerHTML =
-    `<span class="hero-given-name">${topLine}</span><span class="highlight">${bottomLine}</span>`;
+    `<span class="hero-given-name">${topLine}</span>` +
+    `<span class="highlight">${bottomLine}</span>`;
   document.getElementById("hero-title").textContent = p.title;
   document.getElementById("hero-tagline").textContent = p.tagline;
   document.getElementById("cv-link").href = baseProfile.cv;

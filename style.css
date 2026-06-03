@@ -433,16 +433,26 @@ h1 {
 }
 
 #hero-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   color: var(--text);
+}
+
+#hero-name .hero-given-name {
+  display: block;
+  white-space: nowrap;
+  line-height: 1.15;
 }
 
 #hero-name .highlight {
   display: block;
+  white-space: nowrap;
   font-size: 0.55em;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
-  margin-top: 6px;
-  letter-spacing: 0;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
 }
 
 .hero-title {
