@@ -53,7 +53,7 @@ const I18N_UI = {
 const I18N_DATA = {
   en: {
     profile: {
-      name: "Paule COSTY", highlight: "Michelle BANKOUE",
+      name: "Paule Michelle", highlight: "COSTY BANKOUE",
       title: "Full Stack Developer focused on AI & Data Analyst",
       tagline: "AI & Big Data student, motivated and solution-oriented.",
       roles: ["Full Stack Developer", "Data Analyst", "AI & Big Data Specialist", "Odoo & Power BI Consultant"]
@@ -114,7 +114,7 @@ const I18N_DATA = {
   },
   es: {
     profile: {
-      name: "Paule COSTY", highlight: "Michelle BANKOUE",
+      name: "Paule Michelle", highlight: "COSTY BANKOUE",
       title: "Desarrolladora Full Stack orientada a IA y Analista de datos",
       tagline: "Estudiante de Inteligencia Artificial y Big Data, motivada y orientada a soluciones.",
       roles: ["Desarrolladora Full Stack", "Analista de datos", "Especialista IA y Big Data", "Consultora Odoo y Power BI"]

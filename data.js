@@ -1,7 +1,7 @@
 const PORTFOLIO_DATA = {
   profile: {
-    name: "Paule COSTY",
-    highlight: "Michelle BANKOUE",
+    name: "Paule Michelle",
+    highlight: "COSTY BANKOUE",
     title: "Développeuse Full Stack orientée IA & Analyste de données",
     tagline:
       "Étudiante en Intelligence Artificielle & Big Data, motivée et orientée solutions.",
