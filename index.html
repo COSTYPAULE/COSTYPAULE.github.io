@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,26 @@
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
+  <header class="top-toolbar" id="top-toolbar">
+    <div class="toolbar-inner">
+      <div class="toolbar-control">
+        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+        <select id="lang-select" class="toolbar-select" aria-label="Langue">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <div class="toolbar-control">
+        <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+        <select id="theme-select" class="toolbar-select" aria-label="Thème">
+          <option value="dark">Sombre</option>
+          <option value="light">Clair</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
   <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
     <i class="fa-solid fa-bars"></i>
   </button>
@@ -31,13 +51,13 @@
         </a>
 
         <nav class="sidebar-nav" id="nav-links">
-          <a href="#accueil" class="nav-link active"><i class="fa-solid fa-house"></i><span>Accueil</span></a>
-          <a href="#apropos" class="nav-link"><i class="fa-solid fa-user"></i><span>À propos</span></a>
-          <a href="#experience" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Expérience</span></a>
-          <a href="#competences" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Compétences</span></a>
-          <a href="#projets" class="nav-link"><i class="fa-solid fa-rocket"></i><span>Projets</span></a>
-          <a href="#github-repos" class="nav-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
-          <a href="#contact" class="nav-link nav-cta"><i class="fa-solid fa-paper-plane"></i><span>Contact</span></a>
+          <a href="#accueil" class="nav-link active"><i class="fa-solid fa-house"></i><span data-i18n="nav.home">Accueil</span></a>
+          <a href="#apropos" class="nav-link"><i class="fa-solid fa-user"></i><span data-i18n="nav.about">À propos</span></a>
+          <a href="#experience" class="nav-link"><i class="fa-solid fa-briefcase"></i><span data-i18n="nav.experience">Expérience</span></a>
+          <a href="#competences" class="nav-link"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav.skills">Compétences</span></a>
+          <a href="#projets" class="nav-link"><i class="fa-solid fa-rocket"></i><span data-i18n="nav.projects">Projets</span></a>
+          <a href="#github-repos" class="nav-link"><i class="fa-brands fa-github"></i><span data-i18n="nav.github">GitHub</span></a>
+          <a href="#contact" class="nav-link nav-cta"><i class="fa-solid fa-paper-plane"></i><span data-i18n="nav.contact">Contact</span></a>
         </nav>
 
         <div class="sidebar-social" id="hero-social"></div>
@@ -53,16 +73,16 @@
             </div>
           </div>
           <div class="hero-copy">
-            <span class="eyebrow"><span class="pulse-dot"></span> Disponible pour opportunités</span>
-            <p class="hero-greeting">Bonjour, je suis</p>
+            <span class="eyebrow"><span class="pulse-dot"></span> <span data-i18n="hero.available">Disponible pour opportunités</span></span>
+            <p class="hero-greeting" data-i18n="hero.greeting">Bonjour, je suis</p>
             <h1 id="hero-name"></h1>
             <p class="hero-title" id="hero-title"></p>
             <p class="hero-tagline" id="hero-tagline"></p>
             <p class="typed-line"><span id="typed-text"></span><span class="cursor-blink">|</span></p>
             <div class="hero-actions">
-              <a href="#projets" class="btn btn-primary">Voir mes projets <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#projets" class="btn btn-primary"><span data-i18n="hero.ctaProjects">Voir mes projets</span> <i class="fa-solid fa-arrow-right"></i></a>
               <a id="cv-link" href="#" target="_blank" rel="noopener" class="btn btn-ghost">
-                <i class="fa-solid fa-file-arrow-down"></i> CV
+                <i class="fa-solid fa-file-arrow-down"></i> <span data-i18n="hero.cv">CV</span>
               </a>
             </div>
           </div>
@@ -75,8 +95,8 @@
       <section id="apropos" class="panel">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Profil</p>
-            <h2>À propos de moi</h2>
+            <p class="eyebrow" data-i18n="sections.profile">Profil</p>
+            <h2 data-i18n="sections.about">À propos de moi</h2>
           </div>
         </div>
         <div class="split reveal">
@@ -87,10 +107,10 @@
             <div class="languages-block" id="languages-block"></div>
           </div>
           <div class="glass card-block">
-            <h3><i class="fa-solid fa-graduation-cap"></i> Parcours académique</h3>
+            <h3><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="about.formation">Parcours académique</span></h3>
             <div id="formation-list"></div>
             <div class="tech-marquee-wrap">
-              <h4>Stack technique</h4>
+              <h4 data-i18n="about.stack">Stack technique</h4>
               <div class="tech-tags" id="tech-tags"></div>
             </div>
           </div>
@@ -100,8 +120,8 @@
       <section id="experience" class="panel panel-muted">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Parcours</p>
-            <h2>Expérience professionnelle</h2>
+            <p class="eyebrow" data-i18n="sections.journey">Parcours</p>
+            <h2 data-i18n="sections.experience">Expérience professionnelle</h2>
           </div>
         </div>
         <div class="timeline" id="experience-timeline"></div>
@@ -110,8 +130,8 @@
       <section id="competences" class="panel">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Expertise</p>
-            <h2>Compétences techniques</h2>
+            <p class="eyebrow" data-i18n="sections.expertise">Expertise</p>
+            <h2 data-i18n="sections.skills">Compétences techniques</h2>
           </div>
         </div>
         <div class="skills-wrap reveal" id="skills-bars"></div>
@@ -121,8 +141,8 @@
       <section id="certifications" class="panel panel-muted">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Certifications</p>
-            <h2>Formations & certifications</h2>
+            <p class="eyebrow" data-i18n="sections.certifications">Certifications</p>
+            <h2 data-i18n="sections.certsTitle">Formations & certifications</h2>
           </div>
         </div>
         <div class="cert-grid" id="cert-grid"></div>
@@ -131,8 +151,8 @@
       <section id="projets" class="panel">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Réalisations</p>
-            <h2>Projets & missions clés</h2>
+            <p class="eyebrow" data-i18n="sections.achievements">Réalisations</p>
+            <h2 data-i18n="sections.projects">Projets & missions clés</h2>
           </div>
         </div>
         <div class="projects-grid" id="projects-grid"></div>
@@ -141,8 +161,8 @@
       <section id="github-repos" class="panel panel-muted">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Open source</p>
-            <h2>Projets GitHub</h2>
+            <p class="eyebrow" data-i18n="sections.opensource">Open source</p>
+            <h2 data-i18n="sections.github">Projets GitHub</h2>
           </div>
         </div>
         <p class="section-sub reveal" id="github-count"></p>
@@ -155,18 +175,18 @@
         <div class="contact-wrap glass reveal">
           <div class="section-head">
             <div>
-              <p class="eyebrow">Contact</p>
-              <h2>Travaillons ensemble</h2>
+              <p class="eyebrow" data-i18n="sections.contact">Contact</p>
+              <h2 data-i18n="sections.workTogether">Travaillons ensemble</h2>
             </div>
           </div>
-          <p class="contact-intro">Un projet, un stage ou une collaboration ? Écrivez-moi.</p>
+          <p class="contact-intro" data-i18n="contact.intro">Un projet, un stage ou une collaboration ? Écrivez-moi.</p>
           <form id="contact-form" class="contact-form">
             <div class="form-row">
-              <input type="text" name="name" placeholder="Votre nom" required>
-              <input type="email" name="email" placeholder="votre@email.com" required>
+              <input type="text" name="name" data-i18n-placeholder="contact.name" placeholder="Votre nom" required>
+              <input type="email" name="email" data-i18n-placeholder="contact.email" placeholder="votre@email.com" required>
             </div>
-            <textarea name="message" rows="4" placeholder="Votre message…" required></textarea>
-            <button type="submit" class="btn btn-primary full">Envoyer <i class="fa-solid fa-paper-plane"></i></button>
+            <textarea name="message" rows="4" data-i18n-placeholder="contact.message" placeholder="Votre message…" required></textarea>
+            <button type="submit" class="btn btn-primary full"><span data-i18n="contact.send">Envoyer</span> <i class="fa-solid fa-paper-plane"></i></button>
           </form>
           <div id="form-status" class="form-status" role="status"></div>
         </div>
@@ -182,6 +202,7 @@
   <button id="back-top" class="back-top" aria-label="Haut de page"><i class="fa-solid fa-arrow-up"></i></button>
 
   <script src="data.js"></script>
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
