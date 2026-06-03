@@ -100,11 +100,9 @@ function initProfile() {
   photo.src = baseProfile.photo;
   photo.alt = `${p.name} ${p.highlight}`;
 
-  const givenName = /COSTY|BANKOUE/i.test(p.name) ? p.highlight : p.name;
-  const familyName = (/COSTY|BANKOUE/i.test(p.name) ? p.name : p.highlight).toUpperCase();
   document.getElementById("hero-name").innerHTML =
-    `<span class="hero-given-name">${givenName}</span>` +
-    `<span class="hero-family-name">${familyName}</span>`;
+    `<span class="hero-prenom">${p.name}</span>` +
+    `<span class="hero-nom highlight">${p.highlight}</span>`;
   document.getElementById("hero-title").textContent = p.title;
   document.getElementById("hero-tagline").textContent = p.tagline;
   document.getElementById("cv-link").href = baseProfile.cv;

@@ -433,25 +433,26 @@ h1 {
 }
 
 #hero-name {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+  display: block;
   color: var(--text);
 }
 
-#hero-name .hero-given-name {
+#hero-name .hero-prenom {
   display: block;
   white-space: nowrap;
+  color: var(--text);
   line-height: 1.15;
 }
 
-#hero-name .hero-family-name {
+#hero-name .hero-nom {
   display: block;
-  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  white-space: nowrap;
+  margin-top: 10px;
+  font-size: clamp(1.45rem, 3vw, 2rem);
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.04em;
+  text-transform: uppercase;
   line-height: 1.2;
 }
 
