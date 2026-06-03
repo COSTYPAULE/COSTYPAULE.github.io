@@ -443,13 +443,12 @@ h1 {
 
 #hero-name .hero-first-name {
   display: block;
-  font-family: var(--font);
-  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
-  font-weight: 400;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.1;
   color: var(--text);
   white-space: nowrap;
-  text-transform: lowercase;
 }
 
 #hero-name .hero-family-name {
@@ -470,18 +469,13 @@ h1 {
 
 .brand-name .brand-line-given {
   display: block;
-  font-family: var(--font);
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1.2;
   color: var(--text);
-  text-transform: lowercase;
 }
 
 .brand-name .brand-line-family {
   display: block;
   margin-top: 4px;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.2;
   color: var(--accent);

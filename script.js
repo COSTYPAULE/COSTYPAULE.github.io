@@ -94,24 +94,17 @@ function renderAll() {
   );
 }
 
-function formatFamilyNameHtml(family, accentClass = "name-accent") {
-  const upper = (family || "COSTY BANKOUE").toUpperCase().trim();
-  if (upper.startsWith("COSTY")) {
-    return `<span class="${accentClass}">COSTY</span> BANKOUE`;
-  }
-  return upper;
-}
-
 function initProfile() {
   const { profile: p } = portfolio;
   const photo = document.getElementById("profile-photo");
   photo.src = baseProfile.photo;
-  photo.alt = `${p.name} ${p.highlight}`;
+  photo.alt = "BANKOUE Michelle COSTY PAULE";
 
-  const givenName = (p.name || "Paule Michelle").toLowerCase();
+  const nameTop = "BANKOUE MICHELLE";
+  const nameBottom = "COSTY PAULE";
   document.getElementById("hero-name").innerHTML =
-    `<span class="hero-first-name">${givenName}</span>` +
-    `<span class="hero-family-name">${formatFamilyNameHtml(p.highlight)}</span>`;
+    `<span class="hero-first-name">${nameTop}</span>` +
+    `<span class="hero-family-name">${nameBottom}</span>`;
   document.getElementById("hero-title").textContent = p.title;
   document.getElementById("hero-tagline").textContent = p.tagline;
   document.getElementById("cv-link").href = baseProfile.cv;
@@ -122,8 +115,8 @@ function initProfile() {
   const sidebarRole = document.getElementById("sidebar-role");
   if (sidebarName) {
     sidebarName.innerHTML =
-      `<span class="brand-line-given">${givenName}</span>` +
-      `<span class="brand-line-family">${formatFamilyNameHtml(p.highlight, "brand-accent")}</span>`;
+      `<span class="brand-line-given">${nameTop}</span>` +
+      `<span class="brand-line-family">${nameBottom}</span>`;
   }
   if (sidebarRole) sidebarRole.textContent = "Full Stack • IA & Data";
 
