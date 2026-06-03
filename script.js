@@ -101,8 +101,8 @@ function initProfile() {
   photo.alt = `${p.name} ${p.highlight}`;
 
   document.getElementById("hero-name").innerHTML =
-    `<span class="hero-prenom">${p.name}</span>` +
-    `<span class="hero-nom highlight">${p.highlight}</span>`;
+    `<span class="hero-first-name">${p.name}</span>` +
+    `<span class="hero-family-name">${p.highlight}</span>`;
   document.getElementById("hero-title").textContent = p.title;
   document.getElementById("hero-tagline").textContent = p.tagline;
   document.getElementById("cv-link").href = baseProfile.cv;
