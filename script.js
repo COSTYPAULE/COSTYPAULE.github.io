@@ -457,11 +457,16 @@ function initNav() {
     { passive: true }
   );
 
-  toggle?.addEventListener("click", () => {
+  toggle?.addEventListener("click", (e) => {
+    e.stopPropagation();
     setSidebarOpen(!sidebar.classList.contains("open"));
   });
 
   overlay?.addEventListener("click", () => setSidebarOpen(false));
+
+  sidebar?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") setSidebarOpen(false);

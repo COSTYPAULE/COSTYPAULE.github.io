@@ -158,16 +158,18 @@ body {
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  z-index: 95;
+  z-index: 800;
   background: rgba(0, 0, 0, 0.65);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity var(--transition), visibility var(--transition);
 }
 
 .sidebar-overlay.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .noise {
@@ -1585,22 +1587,28 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    top: calc(var(--toolbar-h) / 2);
+    transform: translateY(-50%);
+    right: auto;
+    left: 16px;
+    z-index: 920;
   }
 
   .sidebar-overlay {
     background: rgba(0, 0, 0, 0.72);
   }
 
-  /* left au lieu de transform : évite le texte flou sur iOS Safari */
   .sidebar {
-    width: min(320px, 86vw);
-    left: -100%;
-    transform: none;
+    width: min(300px, 88vw);
+    left: calc(-1 * min(300px, 88vw));
+    transform: none !important;
     transition: left var(--transition);
     box-shadow: none;
     background: var(--bg-muted);
-    z-index: 160;
-    -webkit-font-smoothing: subpixel-antialiased;
+    z-index: 900;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
   }
 
   [data-theme="light"] .sidebar {
@@ -1609,8 +1617,7 @@ h1 {
 
   .sidebar.open {
     left: 0;
-    transform: none;
-    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.45);
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.4);
   }
 
   body.sidebar-open .noise,
@@ -1624,13 +1631,44 @@ h1 {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: var(--bg-muted);
+    z-index: 850;
   }
+
   .sidebar-inner {
-    padding-top: calc(var(--toolbar-h) + 48px);
+    padding: calc(var(--toolbar-h) + 12px) 18px max(20px, env(safe-area-inset-bottom));
+    height: 100%;
+    max-height: 100dvh;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .sidebar-brand {
-    margin-top: 8px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-nav {
+    flex: 0 1 auto;
+    padding: 4px 0;
+    gap: 4px;
+  }
+
+  .sidebar-nav a {
+    padding: 11px 12px;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-social {
+    flex-shrink: 0;
+    margin-top: 12px;
+    padding-top: 16px;
   }
 
   .scroll-progress {
@@ -1645,14 +1683,6 @@ h1 {
 
   .main {
     margin-left: 0;
-  }
-
-  .menu-toggle {
-    top: calc(var(--toolbar-h) / 2);
-    transform: translateY(-50%);
-    right: auto;
-    left: 16px;
-    z-index: 170;
   }
 
   .panel {

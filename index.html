@@ -7,7 +7,7 @@
   <meta name="author" content="Paule Michelle COSTY BANKOUE">
   <title>Paule Michelle COSTY | Portfolio</title>
   <meta name="theme-color" content="#0c0e14">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,11 +18,29 @@
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
-  <div class="bg-ambient" aria-hidden="true">
-    <span class="orb orb-a"></span>
-    <span class="orb orb-b"></span>
-    <span class="orb orb-c"></span>
-  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <a href="#accueil" class="sidebar-brand">
+        <div class="brand-text">
+          <span class="brand-name" id="sidebar-name">Paule COSTY</span>
+          <span class="brand-role" id="sidebar-role">Full Stack • IA &amp; Data Analyst</span>
+        </div>
+      </a>
+
+      <nav class="sidebar-nav" id="nav-links">
+        <a href="#accueil" class="nav-link active"><i class="fa-solid fa-house"></i><span data-i18n="nav.home">Accueil</span></a>
+        <a href="#apropos" class="nav-link"><i class="fa-solid fa-user"></i><span data-i18n="nav.about">À propos</span></a>
+        <a href="#experience" class="nav-link"><i class="fa-solid fa-briefcase"></i><span data-i18n="nav.experience">Expérience</span></a>
+        <a href="#competences" class="nav-link"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav.skills">Compétences</span></a>
+        <a href="#projets" class="nav-link"><i class="fa-solid fa-rocket"></i><span data-i18n="nav.projects">Projets</span></a>
+        <a href="#github-repos" class="nav-link"><i class="fa-brands fa-github"></i><span data-i18n="nav.github">GitHub</span></a>
+        <a href="#contact" class="nav-link nav-cta"><i class="fa-solid fa-paper-plane"></i><span data-i18n="nav.contact">Contact</span></a>
+      </nav>
+
+      <div class="sidebar-social" id="hero-social"></div>
+    </div>
+  </aside>
 
   <header class="top-toolbar" id="top-toolbar">
     <div class="toolbar-inner">
@@ -40,34 +58,17 @@
     </div>
   </header>
 
+  <div class="bg-ambient" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
   <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
     <i class="fa-solid fa-bars"></i>
   </button>
 
   <div class="app">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-inner">
-        <a href="#accueil" class="sidebar-brand">
-          <div class="brand-text">
-            <span class="brand-name" id="sidebar-name">Paule COSTY</span>
-            <span class="brand-role" id="sidebar-role">Full Stack • IA &amp; Data Analyst</span>
-          </div>
-        </a>
-
-        <nav class="sidebar-nav" id="nav-links">
-          <a href="#accueil" class="nav-link active"><i class="fa-solid fa-house"></i><span data-i18n="nav.home">Accueil</span></a>
-          <a href="#apropos" class="nav-link"><i class="fa-solid fa-user"></i><span data-i18n="nav.about">À propos</span></a>
-          <a href="#experience" class="nav-link"><i class="fa-solid fa-briefcase"></i><span data-i18n="nav.experience">Expérience</span></a>
-          <a href="#competences" class="nav-link"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav.skills">Compétences</span></a>
-          <a href="#projets" class="nav-link"><i class="fa-solid fa-rocket"></i><span data-i18n="nav.projects">Projets</span></a>
-          <a href="#github-repos" class="nav-link"><i class="fa-brands fa-github"></i><span data-i18n="nav.github">GitHub</span></a>
-          <a href="#contact" class="nav-link nav-cta"><i class="fa-solid fa-paper-plane"></i><span data-i18n="nav.contact">Contact</span></a>
-        </nav>
-
-        <div class="sidebar-social" id="hero-social"></div>
-      </div>
-    </aside>
-
     <main class="main">
       <header id="accueil" class="hero panel">
         <div class="hero-grid reveal">
@@ -207,6 +208,6 @@
 
   <script src="data.js?v=8"></script>
   <script src="i18n.js?v=8"></script>
-  <script src="script.js?v=10"></script>
+  <script src="script.js?v=11"></script>
 </body>
 </html>
