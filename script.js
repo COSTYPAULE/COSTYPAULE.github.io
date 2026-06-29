@@ -436,6 +436,7 @@ function initNav() {
   const setSidebarOpen = (open) => {
     sidebar.classList.toggle("open", open);
     overlay?.classList.toggle("visible", open);
+    document.body.classList.toggle("sidebar-open", open);
     toggle?.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
   };

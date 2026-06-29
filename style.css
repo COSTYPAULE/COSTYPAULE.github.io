@@ -159,8 +159,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 95;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.65);
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition), visibility var(--transition);
@@ -1589,18 +1588,19 @@ h1 {
   }
 
   .sidebar-overlay {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.72);
   }
 
+  /* left au lieu de transform : évite le texte flou sur iOS Safari */
   .sidebar {
     width: min(320px, 86vw);
-    transform: translate3d(-100%, 0, 0);
+    left: -100%;
+    transform: none;
+    transition: left var(--transition);
     box-shadow: none;
     background: var(--bg-muted);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    z-index: 160;
+    -webkit-font-smoothing: subpixel-antialiased;
   }
 
   [data-theme="light"] .sidebar {
@@ -1608,10 +1608,23 @@ h1 {
   }
 
   .sidebar.open {
-    transform: translate3d(0, 0, 0);
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.55);
+    left: 0;
+    transform: none;
+    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.45);
   }
 
+  body.sidebar-open .noise,
+  body.sidebar-open .bg-ambient {
+    visibility: hidden;
+  }
+
+  .top-toolbar {
+    left: 0;
+    padding: 0 16px 0 64px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-muted);
+  }
   .sidebar-inner {
     padding-top: calc(var(--toolbar-h) + 48px);
   }
@@ -1634,16 +1647,12 @@ h1 {
     margin-left: 0;
   }
 
-  .top-toolbar {
-    left: 0;
-    padding: 0 16px 0 64px;
-  }
-
   .menu-toggle {
     top: calc(var(--toolbar-h) / 2);
     transform: translateY(-50%);
     right: auto;
     left: 16px;
+    z-index: 170;
   }
 
   .panel {
