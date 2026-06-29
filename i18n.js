@@ -1,4 +1,11 @@
 /** Traductions UI + contenu (FR utilise PORTFOLIO_DATA) */
+const LANG_OPTIONS = [
+  { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
+  { code: "de", label: "Deutsch" },
+  { code: "es", label: "Español" }
+];
+
 const I18N_UI = {
   fr: {
     toolbar: { lang: "Langue", theme: "Thème" },
@@ -47,6 +54,22 @@ const I18N_UI = {
     contact: { intro: "¿Un proyecto, prácticas o colaboración? Escríbeme.", name: "Tu nombre", email: "tu@email.com", message: "Tu mensaje…", send: "Enviar", mailOpen: "Se abrirá tu cliente de correo…" },
     github: { loading: "Cargando…", none: "No hay proyectos GitHub configurados.", error: "No se pudieron cargar los repositorios.", featured: "Proyectos destacados en @", hosted: "Proyecto alojado en GitHub.", repo: "Repositorio", fork: "Fork", project: "Proyecto GitHub", credly: "Insignia Credly" },
     fne: "N.º FNE"
+  },
+  de: {
+    toolbar: { lang: "Sprache", theme: "Design" },
+    themes: { dark: "Dunkel", light: "Hell" },
+    nav: { home: "Start", about: "Über mich", experience: "Erfahrung", skills: "Fähigkeiten", projects: "Projekte", github: "GitHub", contact: "Kontakt" },
+    hero: { available: "Offen für Möglichkeiten", greeting: "Hallo, ich bin", ctaProjects: "Projekte ansehen", cv: "Lebenslauf" },
+    sections: {
+      profile: "Profil", about: "Über mich", journey: "Werdegang", experience: "Berufserfahrung",
+      expertise: "Expertise", skills: "Technische Fähigkeiten", certifications: "Zertifizierungen",
+      certsTitle: "Ausbildung & Zertifizierungen", achievements: "Erfolge", projects: "Schlüsselprojekte",
+      opensource: "Open Source", github: "GitHub-Projekte", contact: "Kontakt", workTogether: "Lassen Sie uns zusammenarbeiten"
+    },
+    about: { formation: "Akademischer Werdegang", stack: "Tech-Stack", strengths: "Stärken", spoken: "Sprachen" },
+    contact: { intro: "Ein Projekt, Praktikum oder Zusammenarbeit? Schreiben Sie mir.", name: "Ihr Name", email: "ihre@email.com", message: "Ihre Nachricht…", send: "Senden", mailOpen: "Ihr E-Mail-Programm wird geöffnet…" },
+    github: { loading: "Laden…", none: "Keine GitHub-Projekte konfiguriert.", error: "GitHub-Repositories konnten nicht geladen werden.", featured: "Empfohlene Projekte auf @", hosted: "Projekt auf GitHub gehostet.", repo: "Repository", fork: "Fork", project: "GitHub-Projekt", credly: "Credly-Abzeichen" },
+    fne: "FNE-Nr."
   }
 };
 
@@ -194,7 +217,7 @@ function getLocaleData(lang) {
       featuredGitHubRepos: base.featuredGitHubRepos
     };
   }
-  const tr = I18N_DATA[lang];
+  const tr = I18N_DATA[lang] || I18N_DATA.en;
   return {
     profile: { ...base.profile, ...tr.profile },
     about: tr.about,
@@ -217,7 +240,11 @@ function getLocaleData(lang) {
 
 function t(path, lang) {
   const keys = path.split(".");
-  let v = I18N_UI[lang] || I18N_UI.fr;
+  let v = I18N_UI[lang] || I18N_UI.en;
   for (const k of keys) v = v?.[k];
+  if (v === undefined) {
+    v = I18N_UI.en;
+    for (const k of keys) v = v?.[k];
+  }
   return v ?? path;
 }

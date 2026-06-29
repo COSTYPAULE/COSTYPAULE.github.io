@@ -1,6 +1,6 @@
-let currentLang = "fr";
+let currentLang = "en";
 let currentTheme = "dark";
-let portfolio = getLocaleData("fr");
+let portfolio = getLocaleData("en");
 let typedTimeout = null;
 
 const { profile: baseProfile } = PORTFOLIO_DATA;
@@ -9,12 +9,21 @@ function ui(path) {
   return t(path, currentLang);
 }
 
+function initLangSelect() {
+  const langSelect = document.getElementById("lang-select");
+  if (!langSelect || !LANG_OPTIONS) return;
+  langSelect.innerHTML = LANG_OPTIONS.map(
+    ({ code, label }) => `<option value="${code}">${label}</option>`
+  ).join("");
+}
+
 function initSettings() {
   const savedLang = localStorage.getItem("portfolio-lang");
   const savedTheme = localStorage.getItem("portfolio-theme");
-  if (savedLang && I18N_UI[savedLang]) currentLang = savedLang;
+  if (savedLang && LANG_OPTIONS.some((l) => l.code === savedLang)) currentLang = savedLang;
   if (savedTheme === "light" || savedTheme === "dark") currentTheme = savedTheme;
 
+  initLangSelect();
   const langSelect = document.getElementById("lang-select");
   const themeSelect = document.getElementById("theme-select");
 
@@ -36,6 +45,8 @@ function initSettings() {
 function applyTheme(theme, save = true) {
   currentTheme = theme;
   document.documentElement.setAttribute("data-theme", theme);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = theme === "light" ? "#f4f5f9" : "#0c0e14";
   if (save) localStorage.setItem("portfolio-theme", theme);
   updateThemeSelectLabels();
 }
@@ -51,7 +62,7 @@ function updateThemeSelectLabels() {
 function setLocale(lang, save = true) {
   currentLang = lang;
   portfolio = getLocaleData(lang);
-  document.documentElement.lang = lang === "es" ? "es" : lang === "en" ? "en" : "fr";
+  document.documentElement.lang = lang;
   if (save) localStorage.setItem("portfolio-lang", lang);
   applyStaticUI();
   renderAll();
@@ -89,7 +100,7 @@ function renderAll() {
   loadGitHubRepos();
   observeElements(
     document.querySelectorAll(
-      ".card, .project-item, .skill-bar-item, .timeline-item, .cert-card"
+      ".card, .project-item, .skill-bar-item, .timeline-item, .cert-card, .stat-item"
     )
   );
 }
@@ -99,9 +110,12 @@ function initProfile() {
   const photo = document.getElementById("profile-photo");
   photo.src = baseProfile.photo;
   photo.alt = "Paule Michelle COSTY BANKOUE";
+  const markPhotoLoaded = () => photo.classList.add("loaded");
+  photo.addEventListener("load", markPhotoLoaded, { once: true });
+  if (photo.complete) markPhotoLoaded();
 
-  const nameTop = "PAULE MICHELLE";
-  const nameBottom = "COSTY BANKOUE";
+  const nameTop = p.name;
+  const nameBottom = p.highlight;
   document.getElementById("hero-name").innerHTML =
     `<span class="hero-first-name">${nameTop}</span>` +
     `<span class="hero-family-name">${nameBottom}</span>`;
@@ -133,15 +147,15 @@ function initProfile() {
     .join("");
 
   const social = [
-    { href: baseProfile.linkedin, icon: "fa-linkedin", label: "LinkedIn" },
-    { href: `https://github.com/${baseProfile.github}`, icon: "fa-github", label: "GitHub" },
-    { href: `mailto:${baseProfile.email}`, icon: "fa-envelope", label: "Email" }
+    { href: baseProfile.linkedin, icon: "fa-brands fa-linkedin-in", label: "LinkedIn", type: "linkedin", external: true },
+    { href: `https://github.com/${baseProfile.github}`, icon: "fa-brands fa-github", label: "GitHub", type: "github", external: true },
+    { href: `mailto:${baseProfile.email}`, icon: "fa-solid fa-envelope", label: "Email", type: "email", external: false }
   ];
   const socialHtml = social
-    .map(
-      (s) =>
-        `<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}"><i class="fa-brands ${s.icon}"></i></a>`
-    )
+    .map((s) => {
+      const attrs = s.external ? ' target="_blank" rel="noopener"' : "";
+      return `<a href="${s.href}" class="social-btn social-btn-${s.type}"${attrs} aria-label="${s.label}"><i class="${s.icon}" aria-hidden="true"></i></a>`;
+    })
     .join("");
   document.getElementById("hero-social").innerHTML = socialHtml;
   const footerSocial = document.getElementById("footer-social");
@@ -169,8 +183,8 @@ function initStats() {
   document.getElementById("stats-grid").innerHTML = portfolio.stats
     .map(
       (s) => `
-    <div class="stat-item reveal visible">
-      <h3 data-target="${s.value}" data-suffix="${s.suffix}">${s.value}${s.suffix}</h3>
+    <div class="stat-item">
+      <h3 data-target="${s.value}" data-suffix="${s.suffix}">0${s.suffix}</h3>
       <p>${s.label}</p>
     </div>`
     )
@@ -379,12 +393,14 @@ async function loadGitHubRepos() {
 
 function initScrollProgress() {
   const bar = document.getElementById("scroll-progress");
+  const toolbar = document.getElementById("top-toolbar");
   if (!bar) return;
   window.addEventListener(
     "scroll",
     () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.width = `${h > 0 ? (window.scrollY / h) * 100 : 0}%`;
+      toolbar?.classList.toggle("scrolled", window.scrollY > 10);
     },
     { passive: true }
   );
@@ -410,11 +426,19 @@ function initContactForm() {
 
 function initNav() {
   const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
   const toggle = document.getElementById("menu-toggle");
   const links = document.querySelectorAll(".nav-link");
   const sections = [...links]
     .map((l) => document.querySelector(l.getAttribute("href")))
     .filter(Boolean);
+
+  const setSidebarOpen = (open) => {
+    sidebar.classList.toggle("open", open);
+    overlay?.classList.toggle("visible", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+    document.body.style.overflow = open ? "hidden" : "";
+  };
 
   window.addEventListener(
     "scroll",
@@ -433,15 +457,17 @@ function initNav() {
   );
 
   toggle?.addEventListener("click", () => {
-    const open = sidebar.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", open);
+    setSidebarOpen(!sidebar.classList.contains("open"));
+  });
+
+  overlay?.addEventListener("click", () => setSidebarOpen(false));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setSidebarOpen(false);
   });
 
   links.forEach((link) => {
-    link.addEventListener("click", () => {
-      sidebar.classList.remove("open");
-      toggle?.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", () => setSidebarOpen(false));
   });
 
   document.getElementById("back-top")?.addEventListener("click", () => {
@@ -455,10 +481,29 @@ function initNav() {
       !sidebar.contains(e.target) &&
       !toggle.contains(e.target)
     ) {
-      sidebar.classList.remove("open");
-      toggle?.setAttribute("aria-expanded", "false");
+      setSidebarOpen(false);
     }
   });
+}
+
+function animateStatCount(el) {
+  const h3 = el.querySelector("h3[data-target]");
+  if (!h3) return;
+  const target = Number(h3.dataset.target);
+  const suffix = h3.dataset.suffix || "";
+  const decimals = String(h3.dataset.target).includes(".") ? 1 : 0;
+  const duration = 1200;
+  const start = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = target * eased;
+    h3.textContent = `${decimals ? value.toFixed(decimals) : Math.round(value)}${suffix}`;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
 }
 
 function observeElements(nodes) {
@@ -471,12 +516,18 @@ function observeElements(nodes) {
           entry.target.querySelector(".skill-fill").style.width =
             `${entry.target.dataset.level}%`;
         }
+        if (entry.target.classList.contains("stat-item")) {
+          animateStatCount(entry.target);
+        }
         observer.unobserve(entry.target);
       });
     },
     { threshold: 0.12 }
   );
-  nodes.forEach((el) => observer.observe(el));
+  nodes.forEach((el, index) => {
+    el.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 75}ms`);
+    observer.observe(el);
+  });
 }
 
 function initReveal() {
