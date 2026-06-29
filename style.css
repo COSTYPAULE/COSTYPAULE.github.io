@@ -1588,14 +1588,27 @@ h1 {
     justify-content: center;
   }
 
+  .sidebar-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
   .sidebar {
     width: min(320px, 86vw);
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
     box-shadow: none;
+    background: var(--bg-muted);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  [data-theme="light"] .sidebar {
+    background: var(--bg-muted);
   }
 
   .sidebar.open {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.55);
   }
 
