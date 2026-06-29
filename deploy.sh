@@ -8,7 +8,7 @@ REMOTE="https://github.com/COSTYPAULE/COSTYPAULE.github.io.git"
 
 echo "→ Synchronisation depuis $SOURCE_DIR"
 mkdir -p "$REPO_DIR/assets"
-cp "$SOURCE_DIR/index.html" "$SOURCE_DIR/style.css" "$SOURCE_DIR/script.js" "$SOURCE_DIR/data.js" "$REPO_DIR/"
+cp "$SOURCE_DIR/index.html" "$SOURCE_DIR/style.css" "$SOURCE_DIR/script.js" "$SOURCE_DIR/data.js" "$SOURCE_DIR/i18n.js" "$REPO_DIR/"
 cp "$SOURCE_DIR/assets/CV_Michelle_COSTY.pdf" "$REPO_DIR/assets/" 2>/dev/null || true
 
 cd "$REPO_DIR"
